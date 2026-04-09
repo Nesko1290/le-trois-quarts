@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Trois Quarts — Bar à Vin & Fondue, Carouge, Genève</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #C9A96E;
+            --gold-light: #D4BA8A;
+            --gold-dark: #A8854A;
+            --brown-dark: #1A1410;
+            --brown-deep: #2A2018;
+            --brown-medium: #3D2E1E;
+            --cream: #F5F0E8;
+            --cream-light: #FAF7F2;
+            --cream-dark: #E8E0D4;
+            --text-dark: #1A1410;
+            --text-body: #4A3F35;
+            --text-muted: #8A7E72;
+            --white: #FFFFFF;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', 'Libre Baskerville', Georgia, serif;
+            color: var(--text-dark);
+            background-color: var(--cream-light);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        nav.scrolled {
+            background: rgba(26, 20, 16, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 3rem;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--gold);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--cream);
+            text-decoration: none;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            align-items: flex-end;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(to bottom, rgba(26,20,16,0.1) 0%, rgba(26,20,16,0.3) 50%, rgba(26,20,16,0.85) 100%),
+                url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1920&q=85') center/cover no-repeat;
+            transform: scale(1.05);
+            animation: heroZoom 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroZoom {
+            0% { transform: scale(1.05); }
+            100% { transform: scale(1.12); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 6vw 8vh;
+            max-width: 750px;
+        }
+
+        .hero-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .hero-label::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3.5rem, 7vw, 6.5rem);
+            font-weight: 400;
+            color: var(--white);
+            line-height: 1.05;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            color: var(--gold-light);
+        }
+
+        .hero-desc {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            font-weight: 300;
+            color: var(--cream-dark);
+            line-height: 1.7;
+            margin-bottom: 3rem;
+            max-width: 520px;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--brown-dark);
+            background: var(--gold);
+            border: none;
+            padding: 1.15rem 2.8rem;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-cta:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(201, 169, 110, 0.3);
+        }
+
+        .btn-cta svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s;
+        }
+
+        .btn-cta:hover svg {
+            transform: translateX(4px);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 3rem;
+            right: 4rem;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .hero-scroll span {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            writing-mode: vertical-rl;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 1; transform: scaleY(1); }
+            50% { opacity: 0.4; transform: scaleY(0.6); }
+        }
+
+        /* ===== INTRO / ABOUT ===== */
+        .intro {
+            padding: 10rem 6vw;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .intro-text .section-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 400;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-label::before {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 1px;
+            background: var(--gold-dark);
+        }
+
+        .intro-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+        }
+
+        .intro-text h2 em {
+            font-style: italic;
+            color: var(--gold-dark);
+        }
+
+        .intro-text p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            line-height: 1.85;
+            color: var(--text-body);
+            max-width: 480px;
+        }
+
+        .intro-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 1.2rem;
+            height: 600px;
+        }
+
+        .intro-img {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .intro-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .intro-img:hover img {
+            transform: scale(1.06);
+        }
+
+        .intro-img:first-child {
+            grid-row: 1 / 3;
+        }
+
+        /* ===== WINE SELECTION GRID ===== */
+        .wine-section {
+            padding: 8rem 6vw;
+            background: var(--cream);
+        }
+
+        .wine-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .wine-header .section-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 400;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .wine-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 4vw, 3.8rem);
+            font-weight: 400;
+            line-height: 1.15;
+            color: var(--text-dark);
+        }
+
+        .wine-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: auto;
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .wine-card {
+            position: relative;
+            overflow: hidden;
+            background: var(--white);
+        }
+
+        .wine-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .wine-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .wine-card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(to top, rgba(26,20,16,0.9) 0%, transparent 100%);
+            transform: translateY(20%);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .wine-card:hover .wine-card-overlay {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .wine-card-overlay h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--white);
+            margin-bottom: 0.3rem;
+        }
+
+        .wine-card-overlay span {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+        }
+
+        .wine-card:nth-child(1) { grid-column: 1 / 6; grid-row: 1; height: 500px; }
+        .wine-card:nth-child(2) { grid-column: 6 / 9; grid-row: 1; height: 500px; }
+        .wine-card:nth-child(3) { grid-column: 9 / 13; grid-row: 1; height: 500px; }
+        .wine-card:nth-child(4) { grid-column: 1 / 5; grid-row: 2; height: 400px; }
+        .wine-card:nth-child(5) { grid-column: 5 / 13; grid-row: 2; height: 400px; }
+
+        /* ===== FULL BLEED FONDUE ===== */
+        .fondue {
+            position: relative;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: var(--brown-dark);
+        }
+
+        .fondue-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(135deg, rgba(26,20,16,0.85) 0%, rgba(42,32,24,0.72) 40%, rgba(26,20,16,0.65) 100%),
+                url('images/fondue.png') center 40%/cover no-repeat;
+        }
+
+        .fondue-content {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            padding: 8rem 6vw;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            align-items: center;
+        }
+
+        .fondue-text .section-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 400;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .fondue-text .section-label::before {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .fondue-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 4.5vw, 4rem);
+            font-weight: 500;
+            color: var(--white);
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+        }
+
+        .fondue-text h2 em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .fondue-text p {
+            font-size: 1.15rem;
+            font-weight: 400;
+            line-height: 1.85;
+            color: var(--cream);
+            max-width: 480px;
+            margin-bottom: 2.5rem;
+            text-shadow: 0 1px 10px rgba(0,0,0,0.4);
+        }
+
+        .fondue-detail {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .fondue-detail-item {
+            text-align: left;
+        }
+
+        .fondue-detail-item .number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .fondue-detail-item .label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--cream);
+            text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+        }
+
+        .fondue-img-wrapper {
+            position: relative;
+        }
+
+        .fondue-img-wrapper img {
+            width: 100%;
+            height: 550px;
+            object-fit: cover;
+        }
+
+        .fondue-img-border {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            bottom: 15px;
+            left: 15px;
+            border: 1px solid var(--gold);
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        /* ===== MENU SECTION ===== */
+        .menu-section {
+            padding: 10rem 6vw;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .menu-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 6rem;
+            align-items: end;
+        }
+
+        .menu-header-left .section-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 400;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .menu-header-left .section-label::before {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 1px;
+            background: var(--gold-dark);
+        }
+
+        .menu-header-left h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 4vw, 3.8rem);
+            font-weight: 400;
+            line-height: 1.1;
+        }
+
+        .menu-header-left h2 em {
+            font-style: italic;
+            color: var(--gold-dark);
+        }
+
+        .menu-header-right p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.85;
+            color: var(--text-body);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .menu-card {
+            background: var(--white);
+            border: 1px solid var(--cream-dark);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(26,20,16,0.08);
+            border-color: var(--gold-light);
+        }
+
+        .menu-card-img {
+            height: 320px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .menu-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-card:hover .menu-card-img img {
+            transform: scale(1.05);
+        }
+
+        .menu-card-tag {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--brown-dark);
+            background: var(--gold);
+            padding: 0.5rem 1rem;
+        }
+
+        .menu-card-body {
+            padding: 2.5rem 2rem;
+        }
+
+        .menu-card-body h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            color: var(--text-dark);
+        }
+
+        .menu-card-body p {
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .menu-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--cream-dark);
+        }
+
+        .menu-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--gold-dark);
+        }
+
+        .menu-pairing {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* ===== QUOTE / DIVIDER ===== */
+        .quote-section {
+            padding: 8rem 6vw;
+            background: var(--brown-dark);
+            text-align: center;
+        }
+
+        .quote-section blockquote {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3.5vw, 3rem);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--cream);
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            line-height: 1.4;
+        }
+
+        .quote-section cite {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-style: normal;
+        }
+
+        .quote-decoration {
+            width: 50px;
+            height: 1px;
+            background: var(--gold);
+            margin: 0 auto 3rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--brown-deep);
+            color: var(--cream);
+            padding: 6rem 6vw 3rem;
+        }
+
+        .footer-main {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-bottom: 4rem;
+            border-bottom: 1px solid rgba(201,169,110,0.15);
+        }
+
+        .footer-brand .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-brand p {
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.8;
+            color: var(--cream-dark);
+            max-width: 320px;
+            opacity: 0.7;
+        }
+
+        .footer-col h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.8rem;
+        }
+
+        .footer-col p,
+        .footer-col li {
+            font-size: 0.95rem;
+            font-weight: 300;
+            line-height: 2;
+            color: var(--cream-dark);
+            opacity: 0.7;
+            list-style: none;
+        }
+
+        .footer-col a {
+            color: var(--cream-dark);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--gold);
+        }
+
+        .footer-hours-table {
+            width: 100%;
+        }
+
+        .footer-hours-table tr td {
+            font-size: 0.95rem;
+            font-weight: 300;
+            line-height: 2.2;
+            color: var(--cream-dark);
+            opacity: 0.7;
+        }
+
+        .footer-hours-table tr td:first-child {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding-right: 2rem;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-social a {
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(201,169,110,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .footer-social a:hover {
+            background: var(--gold);
+            color: var(--brown-dark);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .intro { grid-template-columns: 1fr; gap: 4rem; }
+            .intro-images { height: 450px; }
+            .fondue-content { grid-template-columns: 1fr; }
+            .fondue-img-wrapper { display: none; }
+            .menu-header { grid-template-columns: 1fr; gap: 2rem; }
+            .menu-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-main { grid-template-columns: 1fr 1fr; gap: 3rem; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-links { display: none; }
+            .hero-content { padding: 0 5vw 6vh; }
+            .intro { padding: 6rem 5vw; }
+            .intro-images { grid-template-columns: 1fr 1fr; height: 350px; }
+            .intro-img:first-child { grid-row: auto; }
+            .wine-section { padding: 5rem 4vw; }
+            .wine-card:nth-child(1),
+            .wine-card:nth-child(2),
+            .wine-card:nth-child(3),
+            .wine-card:nth-child(4),
+            .wine-card:nth-child(5) {
+                grid-column: 1 / 13;
+                height: 300px;
+            }
+            .fondue-content { padding: 5rem 5vw; }
+            .menu-section { padding: 6rem 5vw; }
+            .menu-grid { grid-template-columns: 1fr; }
+            .footer-main { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav id="navbar">
+        <div class="nav-logo">Le Trois Quarts</div>
+        <ul class="nav-links">
+            <li><a href="#about">Notre histoire</a></li>
+            <li><a href="#vins">La cave</a></li>
+            <li><a href="#fondue">Fondue</a></li>
+            <li><a href="#menu">Le menu</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-label">Bar &agrave; vin &amp; fondue &mdash; Vieux-Carouge, Gen&egrave;ve</div>
+            <h1 class="hero-title">Le Trois<br><em>Quarts</em></h1>
+            <p class="hero-desc">
+                Un &eacute;crin de raffinement au c&oelig;ur du Vieux-Carouge, o&ugrave; chaque verre raconte l'histoire
+                d'un terroir d'exception et chaque fondue se partage avec &eacute;l&eacute;gance. Depuis 2023.
+            </p>
+            <a href="https://www.google.com/maps/reserve/v/dine/c/QkCoGRphxWg?source=pa&opi=89978449&hl=en-CH" target="_blank" rel="noopener" class="btn-cta">
+                R&eacute;server une table
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+        <div class="hero-scroll">
+            <span>D&eacute;couvrir</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- INTRO / ABOUT -->
+    <section class="intro" id="about">
+        <div class="intro-text reveal">
+            <div class="section-label">Notre philosophie</div>
+            <h2>L'art de vivre<br>&agrave; <em>Carouge</em></h2>
+            <p>
+                Nich&eacute; dans le Vieux-Carouge depuis 2023, Le Trois Quarts c&eacute;l&egrave;bre
+                la richesse des vignobles helv&eacute;tiques et europ&eacute;ens autour de fondues
+                g&eacute;n&eacute;reuses. Notre s&eacute;lection, minutieusement curat&eacute;e par notre sommelier,
+                vous invite &agrave; un voyage sensoriel entre tradition et convivialit&eacute;.
+            </p>
+        </div>
+        <div class="intro-images reveal">
+            <div class="intro-img">
+                <img src="https://images.unsplash.com/photo-1474722883778-792e7990302f?w=600&q=80" alt="Cave à vin">
+            </div>
+            <div class="intro-img">
+                <img src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=600&q=80" alt="Verre de vin rouge">
+            </div>
+            <div class="intro-img">
+                <img src="https://images.unsplash.com/photo-1567696911980-2eed69a46042?w=600&q=80" alt="Ambiance chaleureuse">
+            </div>
+        </div>
+    </section>
+
+    <!-- WINE SELECTION -->
+    <section class="wine-section" id="vins">
+        <div class="wine-header reveal">
+            <div class="section-label"><span></span>Notre cave</div>
+            <h2>Une s&eacute;lection<br>d'exception</h2>
+        </div>
+        <div class="wine-grid reveal">
+            <div class="wine-card">
+                <img src="https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=800&q=80" alt="Vin rouge">
+                <div class="wine-card-overlay">
+                    <h3>Pinot Noir</h3>
+                    <span>Valais, Suisse</span>
+                </div>
+            </div>
+            <div class="wine-card">
+                <img src="https://images.unsplash.com/photo-1558001373-7b93ee48ffa0?w=600&q=80" alt="Vin blanc">
+                <div class="wine-card-overlay">
+                    <h3>Chasselas</h3>
+                    <span>Lavaux, Vaud</span>
+                </div>
+            </div>
+            <div class="wine-card">
+                <img src="https://images.unsplash.com/photo-1586370434639-0fe43b2d32e6?w=600&q=80" alt="Champagne">
+                <div class="wine-card-overlay">
+                    <h3>Mousseux Brut</h3>
+                    <span>Neuch&acirc;tel</span>
+                </div>
+            </div>
+            <div class="wine-card">
+                <img src="https://images.unsplash.com/photo-1569919659476-f0852f6834b7?w=600&q=80" alt="Rosé">
+                <div class="wine-card-overlay">
+                    <h3>Ros&eacute; de Gamay</h3>
+                    <span>Gen&egrave;ve</span>
+                </div>
+            </div>
+            <div class="wine-card">
+                <img src="https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?w=1200&q=80" alt="Collection de vins">
+                <div class="wine-card-overlay">
+                    <h3>La Collection Compl&egrave;te</h3>
+                    <span>Plus de 200 r&eacute;f&eacute;rences</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FONDUE FULL BLEED -->
+    <section class="fondue" id="fondue">
+        <div class="fondue-bg"></div>
+        <div class="fondue-content">
+            <div class="fondue-text reveal">
+                <div class="section-label">Exp&eacute;rience signature</div>
+                <h2>La Fondue<br><em>Moiti&eacute;-Moiti&eacute;</em></h2>
+                <p>
+                    Notre fondue moiti&eacute;-moiti&eacute;, le grand classique suisse : Gruy&egrave;re AOP
+                    et Vacherin Fribourgeois fondus &agrave; parts &eacute;gales dans un caquelon traditionnel.
+                    Onctueuse et g&eacute;n&eacute;reuse, elle se savoure entre amis avec un Chasselas
+                    bien frais du canton de Vaud.
+                </p>
+                <div class="fondue-detail">
+                    <div class="fondue-detail-item">
+                        <div class="number">2</div>
+                        <div class="label">Fromages AOP</div>
+                    </div>
+                    <div class="fondue-detail-item">
+                        <div class="number">50/50</div>
+                        <div class="label">Moiti&eacute;-Moiti&eacute;</div>
+                    </div>
+                    <div class="fondue-detail-item">
+                        <div class="number">1</div>
+                        <div class="label">Tradition suisse</div>
+                    </div>
+                </div>
+            </div>
+            <div class="fondue-img-wrapper reveal">
+                <img src="images/fondue.png" alt="Fondue conviviale entre amis">
+                <div class="fondue-img-border"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUOTE -->
+    <section class="quote-section">
+        <div class="quote-decoration"></div>
+        <blockquote class="reveal">
+            &laquo; Le vin est la po&eacute;sie de la terre &raquo;
+        </blockquote>
+        <cite class="reveal">Mario Soldati</cite>
+    </section>
+
+    <!-- MENU SECTION -->
+    <section class="menu-section" id="menu">
+        <div class="menu-header">
+            <div class="menu-header-left reveal">
+                <div class="section-label">Carte</div>
+                <h2>Nos mets<br><em>&agrave; partager</em></h2>
+            </div>
+            <div class="menu-header-right reveal">
+                <p>
+                    Chaque planche et chaque fondue sont pens&eacute;es pour sublimer notre s&eacute;lection
+                    de vins suisses. Des produits artisanaux et de saison, &agrave; savourer entre amis.
+                </p>
+            </div>
+        </div>
+        <div class="menu-grid">
+            <div class="menu-card reveal">
+                <div class="menu-card-img">
+                    <img src="images/planchette%20charcuterie.png" alt="L'Assemblage du Trois Quarts">
+                    <div class="menu-card-tag">&Agrave; partager</div>
+                </div>
+                <div class="menu-card-body">
+                    <h3>L'Assemblage du Vigneron</h3>
+                    <p>
+                        S&eacute;lection de viandes s&eacute;ch&eacute;es des Grisons et fromages
+                        d'alpage affin&eacute;s, agr&eacute;ment&eacute;e de cornichons, noix
+                        et condiments de saison.
+                    </p>
+                    <div class="menu-card-footer">
+                        <span class="menu-price">CHF 34</span>
+                        <span class="menu-pairing">Accord &mdash; Gamay, Gen&egrave;ve</span>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card reveal">
+                <div class="menu-card-img">
+                    <img src="images/fondue.png" alt="Fondue moiti&eacute;-moiti&eacute;">
+                    <div class="menu-card-tag">Signature</div>
+                </div>
+                <div class="menu-card-body">
+                    <h3>Fondue Moiti&eacute;-Moiti&eacute;</h3>
+                    <p>
+                        Gruy&egrave;re AOP et Vacherin Fribourgeois fondus &agrave; parts &eacute;gales,
+                        servis en caquelon avec pain croustillant. Pour 2 personnes.
+                    </p>
+                    <div class="menu-card-footer">
+                        <span class="menu-price">CHF 29 /pers.</span>
+                        <span class="menu-pairing">Accord &mdash; Chasselas, Lavaux</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+        <div class="footer-main">
+            <div class="footer-brand">
+                <div class="footer-logo">Le Trois Quarts</div>
+                <p>
+                    Bar &agrave; vin &amp; fondue au c&oelig;ur du Vieux-Carouge, Gen&egrave;ve.
+                    D&eacute;couvrez notre s&eacute;lection de vins suisses et europ&eacute;ens
+                    dans un cadre intimiste et chaleureux, depuis 2023.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4>Adresse</h4>
+                <p>
+                    Vieux-Carouge<br>
+                    1227 Carouge, Gen&egrave;ve<br>
+                    Suisse
+                </p>
+                <p style="margin-top: 1rem;">
+                    +41 22 312 34 56<br>
+                    info@letroisquarts.ch
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4>Horaires</h4>
+                <table class="footer-hours-table">
+                    <tr><td>Lun</td><td>Ferm&eacute;</td></tr>
+                    <tr><td>Mar &ndash; Jeu</td><td>17h &ndash; 00h</td></tr>
+                    <tr><td>Ven &ndash; Sam</td><td>17h &ndash; 02h</td></tr>
+                    <tr><td>Dim</td><td>16h &ndash; 23h</td></tr>
+                </table>
+            </div>
+            <div class="footer-col" id="reservation">
+                <h4>R&eacute;servation</h4>
+                <p>
+                    Pour r&eacute;server votre table, appelez-nous
+                    ou envoyez un email. Nous vous recommandons
+                    de r&eacute;server 48h &agrave; l'avance le week-end.
+                </p>
+                <a href="https://www.google.com/maps/reserve/v/dine/c/QkCoGRphxWg?source=pa&opi=89978449&hl=en-CH" target="_blank" rel="noopener" class="btn-cta" style="margin-top: 1.5rem; display: inline-flex;">
+                    R&eacute;server
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023&ndash;2026 Le Trois Quarts. Tous droits r&eacute;serv&eacute;s.</p>
+            <div class="footer-social">
+                <a href="#" aria-label="Instagram">IG</a>
+                <a href="#" aria-label="Facebook">FB</a>
+                <a href="#" aria-label="TripAdvisor">TA</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 80);
+        });
+
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        reveals.forEach(el => revealObserver.observe(el));
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+
+</body>
+</html>
