@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Trois Quarts — Bar à Vin & Fondue, Carouge, Genève</title>
+    <meta name="description" content="Bar à vin et fondue au coeur du Vieux-Carouge, Genève. Vins suisses d'exception et fondue moitié-moitié depuis 2023.">
+    <meta property="og:title" content="Le Trois Quarts — Bar à Vin & Fondue">
+    <meta property="og:description" content="Un écrin de raffinement au coeur du Vieux-Carouge. Vins suisses, fondue moitié-moitié, ambiance intimiste.">
+    <meta property="og:type" content="website">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after {
@@ -26,6 +30,8 @@
             --text-body: #4A3F35;
             --text-muted: #8A7E72;
             --white: #FFFFFF;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         html {
@@ -41,6 +47,19 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* ===== GRAIN / NOISE OVERLAY ===== */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0.028;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px 200px;
+        }
+
         /* ===== NAVIGATION ===== */
         nav {
             position: fixed;
@@ -52,14 +71,24 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.7s var(--ease-out-expo);
         }
 
         nav.scrolled {
-            background: rgba(26, 20, 16, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 3rem;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 4rem);
+            max-width: 900px;
+            background: rgba(26, 20, 16, 0.92);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            padding: 0.9rem 2.5rem;
+            border-radius: 100px;
+            box-shadow:
+                0 8px 32px rgba(0,0,0,0.18),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+            border: 1px solid rgba(201,169,110,0.08);
         }
 
         .nav-logo {
@@ -86,7 +115,7 @@
             letter-spacing: 0.2em;
             text-transform: uppercase;
             position: relative;
-            transition: color 0.3s;
+            transition: color 0.4s var(--ease-out-expo);
         }
 
         .nav-links a::after {
@@ -97,7 +126,7 @@
             width: 0;
             height: 1px;
             background: var(--gold);
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: width 0.5s var(--ease-out-expo);
         }
 
         .nav-links a:hover { color: var(--gold); }
@@ -118,7 +147,7 @@
             width: 24px;
             height: 1.5px;
             background: var(--gold);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s var(--ease-out-expo);
             transform-origin: center;
         }
 
@@ -141,7 +170,8 @@
             width: 100%;
             height: 100%;
             background: rgba(26, 20, 16, 0.97);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             z-index: 1001;
             display: flex;
             flex-direction: column;
@@ -150,7 +180,7 @@
             gap: 2.5rem;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.5s var(--ease-out-expo);
         }
 
         .mobile-overlay.open {
@@ -166,21 +196,23 @@
             text-decoration: none;
             letter-spacing: 0.08em;
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.4s, transform 0.4s, color 0.3s;
+            transform: translateY(24px);
+            filter: blur(4px);
+            transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo), filter 0.5s var(--ease-out-expo), color 0.3s;
         }
 
         .mobile-overlay.open a {
             opacity: 1;
             transform: translateY(0);
+            filter: blur(0);
         }
 
-        .mobile-overlay.open a:nth-child(1) { transition-delay: 0.1s; }
-        .mobile-overlay.open a:nth-child(2) { transition-delay: 0.15s; }
-        .mobile-overlay.open a:nth-child(3) { transition-delay: 0.2s; }
-        .mobile-overlay.open a:nth-child(4) { transition-delay: 0.25s; }
-        .mobile-overlay.open a:nth-child(5) { transition-delay: 0.3s; }
-        .mobile-overlay.open a:nth-child(6) { transition-delay: 0.35s; }
+        .mobile-overlay.open a:nth-child(1) { transition-delay: 0.08s; }
+        .mobile-overlay.open a:nth-child(2) { transition-delay: 0.14s; }
+        .mobile-overlay.open a:nth-child(3) { transition-delay: 0.20s; }
+        .mobile-overlay.open a:nth-child(4) { transition-delay: 0.26s; }
+        .mobile-overlay.open a:nth-child(5) { transition-delay: 0.32s; }
+        .mobile-overlay.open a:nth-child(6) { transition-delay: 0.38s; }
 
         .mobile-overlay a:hover { color: var(--gold); }
 
@@ -195,16 +227,18 @@
             background: var(--gold);
             padding: 1rem 2.5rem;
             text-decoration: none;
-            transition: background 0.3s;
+            border-radius: 100px;
+            transition: all 0.4s var(--ease-out-expo);
         }
 
-        .mobile-overlay .mobile-cta:hover { background: var(--gold-light); }
+        .mobile-overlay .mobile-cta:hover { background: var(--gold-light); transform: scale(1.03); }
+        .mobile-overlay .mobile-cta:active { transform: scale(0.97); }
 
         /* ===== HERO SECTION ===== */
         .hero {
             position: relative;
-            height: 100vh;
-            min-height: 700px;
+            min-height: 100dvh;
+            min-height: 100vh; /* fallback */
             display: flex;
             align-items: flex-end;
             overflow: hidden;
@@ -214,21 +248,21 @@
             position: absolute;
             inset: 0;
             background:
-                linear-gradient(to bottom, rgba(26,20,16,0.1) 0%, rgba(26,20,16,0.3) 50%, rgba(26,20,16,0.85) 100%),
+                linear-gradient(to bottom, rgba(26,20,16,0.08) 0%, rgba(26,20,16,0.25) 50%, rgba(26,20,16,0.88) 100%),
                 url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1920&q=85') center/cover no-repeat;
             transform: scale(1.05);
-            animation: heroZoom 20s ease-in-out infinite alternate;
+            animation: heroZoom 25s ease-in-out infinite alternate;
         }
 
         @keyframes heroZoom {
             0% { transform: scale(1.05); }
-            100% { transform: scale(1.12); }
+            100% { transform: scale(1.15); }
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
-            padding: 0 6vw 8vh;
+            padding: 0 6vw 10vh;
             max-width: 750px;
         }
 
@@ -243,6 +277,9 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: heroFadeIn 1s var(--ease-out-expo) 0.3s forwards;
         }
 
         .hero-label::before {
@@ -261,6 +298,9 @@
             line-height: 1.05;
             margin-bottom: 2rem;
             letter-spacing: -0.02em;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: heroFadeIn 1.2s var(--ease-out-expo) 0.5s forwards;
         }
 
         .hero-title em {
@@ -276,6 +316,13 @@
             line-height: 1.7;
             margin-bottom: 3rem;
             max-width: 520px;
+            opacity: 0;
+            transform: translateY(16px);
+            animation: heroFadeIn 1s var(--ease-out-expo) 0.8s forwards;
+        }
+
+        @keyframes heroFadeIn {
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .btn-cta {
@@ -295,23 +342,41 @@
             text-decoration: none;
             position: relative;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s var(--ease-out-expo);
+            opacity: 0;
+            animation: heroFadeIn 1s var(--ease-out-expo) 1s forwards;
+        }
+
+        .btn-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
         }
 
         .btn-cta:hover {
             background: var(--gold-light);
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(201, 169, 110, 0.3);
+            box-shadow: 0 12px 40px rgba(201, 169, 110, 0.35);
+        }
+
+        .btn-cta:hover::before { opacity: 1; }
+
+        .btn-cta:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 4px 16px rgba(201, 169, 110, 0.2);
         }
 
         .btn-cta svg {
             width: 16px;
             height: 16px;
-            transition: transform 0.3s;
+            transition: transform 0.5s var(--ease-out-expo);
         }
 
         .btn-cta:hover svg {
-            transform: translateX(4px);
+            transform: translateX(5px);
         }
 
         .hero-scroll {
@@ -338,12 +403,54 @@
             width: 1px;
             height: 60px;
             background: linear-gradient(to bottom, var(--gold), transparent);
-            animation: scrollPulse 2s ease-in-out infinite;
+            animation: scrollPulse 2.5s var(--ease-out-expo) infinite;
         }
 
         @keyframes scrollPulse {
             0%, 100% { opacity: 1; transform: scaleY(1); }
-            50% { opacity: 0.4; transform: scaleY(0.6); }
+            50% { opacity: 0.3; transform: scaleY(0.5); }
+        }
+
+        /* ===== MARQUEE DIVIDER ===== */
+        .marquee {
+            overflow: hidden;
+            padding: 1.8rem 0;
+            background: var(--brown-dark);
+            border-top: 1px solid rgba(201,169,110,0.1);
+            border-bottom: 1px solid rgba(201,169,110,0.1);
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 4rem;
+            animation: marqueeScroll 30s linear infinite;
+            width: max-content;
+        }
+
+        .marquee-track span {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            font-weight: 400;
+            font-style: italic;
+            letter-spacing: 0.15em;
+            color: var(--gold);
+            opacity: 0.5;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .marquee-track span::after {
+            content: '\2726';
+            font-style: normal;
+            font-size: 0.6rem;
+            opacity: 0.6;
+        }
+
+        @keyframes marqueeScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         /* ===== INTRO / ABOUT ===== */
@@ -385,6 +492,7 @@
             line-height: 1.15;
             margin-bottom: 2rem;
             color: var(--text-dark);
+            letter-spacing: -0.01em;
         }
 
         .intro-text h2 em {
@@ -398,6 +506,7 @@
             line-height: 1.85;
             color: var(--text-body);
             max-width: 480px;
+            text-wrap: pretty;
         }
 
         .intro-images {
@@ -411,13 +520,14 @@
         .intro-img {
             overflow: hidden;
             position: relative;
+            border-radius: 2px;
         }
 
         .intro-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 1s var(--ease-out-expo);
         }
 
         .intro-img:hover img {
@@ -459,6 +569,7 @@
             font-weight: 400;
             line-height: 1.15;
             color: var(--text-dark);
+            letter-spacing: -0.01em;
         }
 
         .wine-grid {
@@ -474,13 +585,14 @@
             position: relative;
             overflow: hidden;
             background: var(--white);
+            border-radius: 2px;
         }
 
         .wine-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 1s var(--ease-out-expo);
         }
 
         .wine-card:hover img {
@@ -496,7 +608,7 @@
             background: linear-gradient(to top, rgba(26,20,16,0.9) 0%, transparent 100%);
             transform: translateY(20%);
             opacity: 0;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.6s var(--ease-out-expo);
         }
 
         .wine-card:hover .wine-card-overlay {
@@ -586,6 +698,7 @@
             line-height: 1.1;
             margin-bottom: 2rem;
             text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+            letter-spacing: -0.01em;
         }
 
         .fondue-text h2 em {
@@ -638,6 +751,7 @@
             width: 100%;
             height: 550px;
             object-fit: cover;
+            border-radius: 2px;
         }
 
         .fondue-img-border {
@@ -692,6 +806,7 @@
             font-size: clamp(2.5rem, 4vw, 3.8rem);
             font-weight: 400;
             line-height: 1.1;
+            letter-spacing: -0.01em;
         }
 
         .menu-header-left h2 em {
@@ -714,16 +829,31 @@
             margin: 0 auto;
         }
 
+        /* Double-Bezel Card Architecture */
         .menu-card {
-            background: var(--white);
-            border: 1px solid var(--cream-dark);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--cream);
+            padding: 0.6rem;
+            border-radius: 4px;
+            transition: all 0.6s var(--ease-out-expo);
+            border: 1px solid rgba(201,169,110,0.12);
         }
 
         .menu-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 20px 60px rgba(26,20,16,0.08);
-            border-color: var(--gold-light);
+            box-shadow:
+                0 24px 64px rgba(26,20,16,0.08),
+                0 8px 24px rgba(26,20,16,0.04);
+            border-color: rgba(201,169,110,0.25);
+        }
+
+        .menu-card:active {
+            transform: translateY(-2px) scale(0.99);
+        }
+
+        .menu-card-inner {
+            background: var(--white);
+            border-radius: 2px;
+            overflow: hidden;
         }
 
         .menu-card-img {
@@ -736,7 +866,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 1s var(--ease-out-expo);
         }
 
         .menu-card:hover .menu-card-img img {
@@ -748,13 +878,14 @@
             top: 1.5rem;
             left: 1.5rem;
             font-family: 'Inter', sans-serif;
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             font-weight: 500;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--brown-dark);
             background: var(--gold);
-            padding: 0.5rem 1rem;
+            padding: 0.45rem 1rem;
+            border-radius: 100px;
         }
 
         .menu-card-body {
@@ -802,9 +933,24 @@
 
         /* ===== QUOTE / DIVIDER ===== */
         .quote-section {
-            padding: 8rem 6vw;
+            padding: 10rem 6vw;
             background: var(--brown-dark);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-section::before {
+            content: '\201C';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -60%);
+            font-family: 'Playfair Display', serif;
+            font-size: 30rem;
+            color: rgba(201,169,110,0.04);
+            pointer-events: none;
+            line-height: 1;
         }
 
         .quote-section blockquote {
@@ -816,6 +962,7 @@
             max-width: 900px;
             margin: 0 auto 2rem;
             line-height: 1.4;
+            position: relative;
         }
 
         .quote-section cite {
@@ -825,6 +972,7 @@
             text-transform: uppercase;
             color: var(--gold);
             font-style: normal;
+            position: relative;
         }
 
         .quote-decoration {
@@ -892,7 +1040,7 @@
         .footer-col a {
             color: var(--cream-dark);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: color 0.4s var(--ease-out-expo);
         }
 
         .footer-col a:hover {
@@ -944,31 +1092,44 @@
             width: 36px;
             height: 36px;
             border: 1px solid rgba(201,169,110,0.3);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--gold);
             text-decoration: none;
             font-size: 0.8rem;
-            transition: all 0.3s;
+            transition: all 0.4s var(--ease-out-expo);
         }
 
         .footer-social a:hover {
             background: var(--gold);
             color: var(--brown-dark);
+            transform: translateY(-2px);
+        }
+
+        .footer-social a:active {
+            transform: translateY(0) scale(0.95);
         }
 
         /* ===== ANIMATIONS ===== */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: blur(6px);
+            transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo), filter 0.9s var(--ease-out-expo);
         }
 
         .reveal.visible {
             opacity: 1;
             transform: translateY(0);
+            filter: blur(0);
         }
+
+        /* Staggered delays for sibling reveals */
+        .reveal.visible.delay-1 { transition-delay: 0.1s; }
+        .reveal.visible.delay-2 { transition-delay: 0.2s; }
+        .reveal.visible.delay-3 { transition-delay: 0.3s; }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
@@ -979,10 +1140,12 @@
             .menu-header { grid-template-columns: 1fr; gap: 2rem; }
             .menu-grid { grid-template-columns: repeat(2, 1fr); }
             .footer-main { grid-template-columns: 1fr 1fr; gap: 3rem; }
+            nav.scrolled { width: calc(100% - 3rem); }
         }
 
         @media (max-width: 768px) {
             nav { padding: 1rem 1.5rem; }
+            nav.scrolled { top: 0.5rem; width: calc(100% - 2rem); padding: 0.8rem 1.5rem; }
             .nav-links { display: none; }
             .hamburger { display: flex; }
             .hero-content { padding: 0 5vw 6vh; }
@@ -1002,6 +1165,9 @@
             .menu-section { padding: 6rem 5vw; }
             .menu-grid { grid-template-columns: 1fr; }
             .footer-main { grid-template-columns: 1fr; }
+            .quote-section { padding: 6rem 5vw; }
+            .quote-section::before { font-size: 15rem; }
+            .marquee-track span { font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -1057,6 +1223,28 @@
         </div>
     </section>
 
+    <!-- MARQUEE -->
+    <div class="marquee">
+        <div class="marquee-track">
+            <span>Vins Suisses</span>
+            <span>Fondue Moiti&eacute;-Moiti&eacute;</span>
+            <span>Vieux-Carouge</span>
+            <span>Charcuterie & Fromages</span>
+            <span>Depuis 2023</span>
+            <span>Chasselas de Lavaux</span>
+            <span>Gamay de Gen&egrave;ve</span>
+            <span>Petite Arvine</span>
+            <span>Vins Suisses</span>
+            <span>Fondue Moiti&eacute;-Moiti&eacute;</span>
+            <span>Vieux-Carouge</span>
+            <span>Charcuterie & Fromages</span>
+            <span>Depuis 2023</span>
+            <span>Chasselas de Lavaux</span>
+            <span>Gamay de Gen&egrave;ve</span>
+            <span>Petite Arvine</span>
+        </div>
+    </div>
+
     <!-- INTRO / ABOUT -->
     <section class="intro" id="about">
         <div class="intro-text reveal">
@@ -1069,9 +1257,9 @@
                 vous invite &agrave; un voyage sensoriel entre tradition et convivialit&eacute;.
             </p>
         </div>
-        <div class="intro-images reveal">
+        <div class="intro-images reveal delay-2">
             <div class="intro-img">
-                <img src="https://images.unsplash.com/photo-1474722883778-792e7990302f?w=600&q=80" alt="Cave à vin">
+                <img src="https://images.unsplash.com/photo-1474722883778-792e7990302f?w=600&q=80" alt="Cave &agrave; vin">
             </div>
             <div class="intro-img">
                 <img src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=600&q=80" alt="Verre de vin rouge">
@@ -1088,7 +1276,7 @@
             <div class="section-label"><span></span>Notre cave</div>
             <h2>Une s&eacute;lection<br>d'exception</h2>
         </div>
-        <div class="wine-grid reveal">
+        <div class="wine-grid reveal delay-2">
             <div class="wine-card">
                 <img src="https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=800&q=80" alt="Vin rouge">
                 <div class="wine-card-overlay">
@@ -1111,7 +1299,7 @@
                 </div>
             </div>
             <div class="wine-card">
-                <img src="https://images.unsplash.com/photo-1569919659476-f0852f6834b7?w=600&q=80" alt="Rosé">
+                <img src="https://images.unsplash.com/photo-1569919659476-f0852f6834b7?w=600&q=80" alt="Ros&eacute;">
                 <div class="wine-card-overlay">
                     <h3>Ros&eacute; de Gamay</h3>
                     <span>Gen&egrave;ve</span>
@@ -1155,7 +1343,7 @@
                     </div>
                 </div>
             </div>
-            <div class="fondue-img-wrapper reveal">
+            <div class="fondue-img-wrapper reveal delay-2">
                 <img src="images/fondue.png" alt="Fondue conviviale entre amis">
                 <div class="fondue-img-border"></div>
             </div>
@@ -1168,7 +1356,7 @@
         <blockquote class="reveal">
             &laquo; Le vin est la po&eacute;sie de la terre &raquo;
         </blockquote>
-        <cite class="reveal">Mario Soldati</cite>
+        <cite class="reveal delay-1">Mario Soldati</cite>
     </section>
 
     <!-- MENU SECTION -->
@@ -1178,7 +1366,7 @@
                 <div class="section-label">Carte</div>
                 <h2>Nos mets<br><em>&agrave; partager</em></h2>
             </div>
-            <div class="menu-header-right reveal">
+            <div class="menu-header-right reveal delay-1">
                 <p>
                     Chaque planche et chaque fondue sont pens&eacute;es pour sublimer notre s&eacute;lection
                     de vins suisses. Des produits artisanaux et de saison, &agrave; savourer entre amis.
@@ -1187,37 +1375,41 @@
         </div>
         <div class="menu-grid">
             <div class="menu-card reveal">
-                <div class="menu-card-img">
-                    <img src="images/planchette%20charcuterie.png" alt="L'Assemblage du Trois Quarts">
-                    <div class="menu-card-tag">&Agrave; partager</div>
-                </div>
-                <div class="menu-card-body">
-                    <h3>L'Assemblage du Vigneron</h3>
-                    <p>
-                        S&eacute;lection de viandes s&eacute;ch&eacute;es des Grisons et fromages
-                        d'alpage affin&eacute;s, agr&eacute;ment&eacute;e de cornichons, noix
-                        et condiments de saison.
-                    </p>
-                    <div class="menu-card-footer">
-                        <span class="menu-price">CHF 34</span>
-                        <span class="menu-pairing">Accord &mdash; Gamay, Gen&egrave;ve</span>
+                <div class="menu-card-inner">
+                    <div class="menu-card-img">
+                        <img src="images/planchette%20charcuterie.png" alt="L'Assemblage du Trois Quarts">
+                        <div class="menu-card-tag">&Agrave; partager</div>
+                    </div>
+                    <div class="menu-card-body">
+                        <h3>L'Assemblage du Vigneron</h3>
+                        <p>
+                            S&eacute;lection de viandes s&eacute;ch&eacute;es des Grisons et fromages
+                            d'alpage affin&eacute;s, agr&eacute;ment&eacute;e de cornichons, noix
+                            et condiments de saison.
+                        </p>
+                        <div class="menu-card-footer">
+                            <span class="menu-price">CHF 34</span>
+                            <span class="menu-pairing">Accord &mdash; Gamay, Gen&egrave;ve</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="menu-card reveal">
-                <div class="menu-card-img">
-                    <img src="images/fondue.png" alt="Fondue moiti&eacute;-moiti&eacute;">
-                    <div class="menu-card-tag">Signature</div>
-                </div>
-                <div class="menu-card-body">
-                    <h3>Fondue Moiti&eacute;-Moiti&eacute;</h3>
-                    <p>
-                        Gruy&egrave;re AOP et Vacherin Fribourgeois fondus &agrave; parts &eacute;gales,
-                        servis en caquelon avec pain croustillant. Pour 2 personnes.
-                    </p>
-                    <div class="menu-card-footer">
-                        <span class="menu-price">CHF 29 /pers.</span>
-                        <span class="menu-pairing">Accord &mdash; Chasselas, Lavaux</span>
+            <div class="menu-card reveal delay-2">
+                <div class="menu-card-inner">
+                    <div class="menu-card-img">
+                        <img src="images/fondue.png" alt="Fondue moiti&eacute;-moiti&eacute;">
+                        <div class="menu-card-tag">Signature</div>
+                    </div>
+                    <div class="menu-card-body">
+                        <h3>Fondue Moiti&eacute;-Moiti&eacute;</h3>
+                        <p>
+                            Gruy&egrave;re AOP et Vacherin Fribourgeois fondus &agrave; parts &eacute;gales,
+                            servis en caquelon avec pain croustillant. Pour 2 personnes.
+                        </p>
+                        <div class="menu-card-footer">
+                            <span class="menu-price">CHF 29 /pers.</span>
+                            <span class="menu-pairing">Accord &mdash; Chasselas, Lavaux</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1263,7 +1455,7 @@
                     ou envoyez un email. Nous vous recommandons
                     de r&eacute;server 48h &agrave; l'avance le week-end.
                 </p>
-                <a href="https://www.google.com/maps/reserve/v/dine/c/QkCoGRphxWg?source=pa&opi=89978449&hl=en-CH" target="_blank" rel="noopener" class="btn-cta" style="margin-top: 1.5rem; display: inline-flex;">
+                <a href="https://www.google.com/maps/reserve/v/dine/c/QkCoGRphxWg?source=pa&opi=89978449&hl=en-CH" target="_blank" rel="noopener" class="btn-cta" style="margin-top: 1.5rem; display: inline-flex; opacity: 1; animation: none;">
                     R&eacute;server
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -1282,13 +1474,13 @@
     </footer>
 
     <script>
-        // Navbar scroll effect
+        // Navbar scroll — floating pill effect
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             navbar.classList.toggle('scrolled', window.scrollY > 80);
         });
 
-        // Reveal on scroll
+        // Reveal on scroll with blur entry
         const reveals = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -1297,7 +1489,7 @@
                     revealObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
         reveals.forEach(el => revealObserver.observe(el));
 
@@ -1326,6 +1518,22 @@
                 mobileMenu.classList.remove('open');
                 document.body.style.overflow = '';
             });
+        });
+
+        // Parallax hero on scroll
+        const heroBg = document.querySelector('.hero-bg');
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const scrolled = window.scrollY;
+                    if (scrolled < window.innerHeight) {
+                        heroBg.style.transform = `scale(${1.05 + scrolled * 0.0001}) translateY(${scrolled * 0.3}px)`;
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
         });
     </script>
 
